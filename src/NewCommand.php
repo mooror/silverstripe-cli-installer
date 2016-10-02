@@ -112,7 +112,7 @@ class NewCommand extends Command
         }
 
         $this->io->title('Installing project...');
-        $composer = $this->findComposer();
+        $composer = $this->findSatis();
         $this->runCommands($composer . ' create-project silverstripe/installer ' . $this->directory, $output);
 
         $this->io->newLine();
@@ -274,7 +274,7 @@ class NewCommand extends Command
      *
      * @return string
      */
-    protected function findComposer()
+    protected function findSatis()
     {
         if (file_exists(getcwd() . '/composer.phar')) {
             return '"' . PHP_BINARY . '" composer.phar';
