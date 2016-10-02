@@ -112,8 +112,10 @@ class NewCommand extends Command
         }
 
         $this->io->title('Installing project...');
-        $composer = $this->findSatis();
-        $this->runCommands($composer . ' create-project silverstripe/installer ' . $this->directory, $output);
+        $satisSciptsUrl = $this->satis('scripts');
+        $this->runCommands('sh ' . $satisSciptsUrl . 'createProject.sh silverstripe-installer 3.4.1 '.$this->directory.' leroysca:leroysca
+', $output);
+        //$this->runCommands(sh $satisSciptUrl . ' create-project silverstripe/installer ' . $this->directory, $output);
 
         $this->io->newLine();
         $this->io->title('Writing configuration');
@@ -268,18 +270,20 @@ class NewCommand extends Command
             throw new RuntimeException('Application already exists!');
         }
     }
-
+    
     /**
-     * Get the composer command for the environment.
+     * Get satis information. Accepts one parameter which is the type of information you wish to retrieve
      *
      * @return string
      */
-    protected function findSatis()
+    protected function satis($type)
     {
-        if (file_exists(getcwd() . '/composer.phar')) {
-            return '"' . PHP_BINARY . '" composer.phar';
-        }
-
-        return 'composer';
+      switch ($type) {
+        case "scripts":
+          return '/home/surestep/public_html/satis/scripts/';
+        break;      
+        default:
+          return '/home/surestep/public_html/satis/bin/satis';  
+      }      
     }
 }
