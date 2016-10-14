@@ -112,9 +112,8 @@ class NewCommand extends Command
         }
 
         $this->io->title('Installing project...');
-        $satisSciptsUrl = $this->satis('scripts');
-        $this->runCommands('sh ' . $satisSciptsUrl . 'createProject.sh silverstripe-installer 3.4.1 '.$this->directory.' leroysca:leroysca
-', $output);
+        //$satisSciptsUrl = $this->satis('scripts');
+        //$this->runCommands('sh ' . $satisSciptsUrl . 'createProject.sh silverstripe-installer 3.4.1 '.$this->directory.' leroysca:leroysca', $output);
         //$this->runCommands(sh $satisSciptUrl . ' create-project silverstripe/installer ' . $this->directory, $output);
 
         $this->io->newLine();
@@ -123,15 +122,15 @@ class NewCommand extends Command
         $this->writer->writeEnvironmentFile($this->config);
         $this->writer->writeConfigFile($this->config);
 
-        $this->runCommands([
-            'cd ' . $this->directory,
-            'php framework/cli-script.php dev/build'
-        ],
-            $output,
-            true); // suppress database build messages
+        // $this->runCommands([
+        //     'cd ' . $this->directory,
+        //     'php framework/cli-script.php dev/build'
+        // ],
+        //     $output,
+        //     true); // suppress database build messages
 
         $this->io->title('Writing configuration');
-        $this->removeInstallationFiles();
+        //$this->removeInstallationFiles();
         $this->writer->writeTestFiles();
 
         $this->io->success([
@@ -270,7 +269,7 @@ class NewCommand extends Command
             throw new RuntimeException('Application already exists!');
         }
     }
-    
+
     /**
      * Get satis information. Accepts one parameter which is the type of information you wish to retrieve
      *
@@ -281,9 +280,9 @@ class NewCommand extends Command
       switch ($type) {
         case "scripts":
           return '/home/surestep/public_html/satis/scripts/';
-        break;      
+        break;
         default:
-          return '/home/surestep/public_html/satis/bin/satis';  
-      }      
+          return '/home/surestep/public_html/satis/bin/satis';
+      }
     }
 }
